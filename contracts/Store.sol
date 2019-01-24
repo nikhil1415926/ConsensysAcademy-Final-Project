@@ -8,12 +8,13 @@ contract Store {
   using SafeMath
   for uint256;
 
-  address payable public owner;
+  address public owner;
   string public name;
   string public description;
   mapping(uint256 => Product) public productsBySku;
   uint256 public newestProductSku;
   bool public stopped = false;
+
 
   struct Product {
     uint sku;
@@ -78,7 +79,7 @@ contract Store {
     }
   }
 
-  constructor(address payable sender, string memory storeName, string memory storeDescription)
+  constructor(address sender, string memory storeName, string memory storeDescription)
   public
   stringLengthOkay(storeName)
   stringLengthOkay(storeDescription) {
@@ -91,17 +92,17 @@ contract Store {
   /** @dev Owner can toggle contract in case of emergency.
    */
   function toggleContractActive()
-  public
-  isOwner {
+  public isOwner {
     stopped = !stopped;
     emit ContractStateToggled(stopped);
   }
 
   /** @dev Owner can withdraw any funds the store has earned by selling products.
    */
-  function withdraw() public payable isOwner {
+  function withdraw() public isOwner {
     owner.transfer(address(this).balance);
   }
+
 
   /** @dev Owner can add products to his/her store to sell.
    * @param newProductName The name of the product.
