@@ -59,7 +59,7 @@ class ShopperContainer extends Component {
   }
 
   handleGoToStorePage(storeId) {
-    console.log('handleGoToStorePage': storeId);
+    console.log('handleGoToStorePage', storeId);
   }
 
   render() {
