@@ -1,20 +1,18 @@
-pragma solidity >= 0.4 .21 < 0.6 .0;
+pragma solidity ^0.4.18;
 
-import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "zeppelin/contracts/math/SafeMath.sol";
 
 
 /** @title Marketplace contract. */
 contract Store {
-  using SafeMath
-  for uint256;
+  using SafeMath for uint256;
 
   address public owner;
   string public name;
   string public description;
-  mapping(uint256 => Product) public productsBySku;
+  mapping (uint256 => Product) public productsBySku;
   uint256 public newestProductSku;
   bool public stopped = false;
-
 
   struct Product {
     uint sku;
@@ -36,7 +34,7 @@ contract Store {
     _;
   }
 
-  modifier stringLengthOkay(string memory str) {
+  modifier stringLengthOkay(string str) {
     require(bytes(str).length <= 32);
     _;
   }
@@ -56,15 +54,15 @@ contract Store {
   }
 
   modifier enoughEthSent(uint256 sku, uint256 quantity) {
-    require(
-      msg.value >= productsBySku[sku].price.mul(quantity),
-      "Not enough Ether provided.");
+      require(
+        msg.value >= productsBySku[sku].price.mul(quantity),
+        "Not enough Ether provided.");
 
-    _;
+      _;
 
-    if (msg.value > productsBySku[sku].price.mul(quantity)) {
-      msg.sender.transfer(msg.value.sub(productsBySku[sku].price.mul(quantity)));
-    }
+      if (msg.value > productsBySku[sku].price.mul(quantity)) {
+        msg.sender.transfer(msg.value.sub(productsBySku[sku].price.mul(quantity)));
+      }
   }
 
   modifier stopInEmergency {
@@ -79,10 +77,10 @@ contract Store {
     }
   }
 
-  constructor(address sender, string memory storeName, string memory storeDescription)
-  public
-  stringLengthOkay(storeName)
-  stringLengthOkay(storeDescription) {
+  constructor(address sender, string storeName, string storeDescription) 
+    public
+    stringLengthOkay(storeName)
+    stringLengthOkay(storeDescription) {
     owner = sender;
     name = storeName;
     description = storeDescription;
@@ -90,35 +88,35 @@ contract Store {
   }
 
   /** @dev Owner can toggle contract in case of emergency.
-   */
-  function toggleContractActive()
-  public isOwner {
-    stopped = !stopped;
-    emit ContractStateToggled(stopped);
+    */
+  function toggleContractActive() 
+    public
+    isOwner {
+      stopped = !stopped;
+      emit ContractStateToggled(stopped);
   }
 
   /** @dev Owner can withdraw any funds the store has earned by selling products.
-   */
-  function withdraw() public isOwner {
+    */
+  function withdraw() public payable isOwner {
     owner.transfer(address(this).balance);
   }
 
-
   /** @dev Owner can add products to his/her store to sell.
-   * @param newProductName The name of the product.
-   * @param newProductDescription The description of the product.
-   * @param newProductPrice The price of the product.
-   */
-  function addNewProduct(string memory newProductName, string memory newProductDescription, uint256 newProductPrice)
-  public
-  isOwner
-  stringLengthOkay(newProductName)
-  stringLengthOkay(newProductDescription) {
+    * @param newProductName The name of the product.
+    * @param newProductDescription The description of the product.
+    * @param newProductPrice The price of the product.
+    */
+  function addNewProduct(string newProductName, string newProductDescription, uint256 newProductPrice) 
+    public
+    isOwner
+    stringLengthOkay(newProductName)
+    stringLengthOkay(newProductDescription) {
     Product memory newProduct = Product({
-      sku: newestProductSku.add(1),
-      inventoryCount: 0,
+      sku: newestProductSku.add(1), 
+      inventoryCount: 0, 
       price: newProductPrice,
-      name: newProductName,
+      name: newProductName, 
       description: newProductDescription
     });
 
@@ -128,34 +126,34 @@ contract Store {
   }
 
   /** @dev Owner can update the inventory for a given product.
-   * @param sku The sku of the product.
-   * @param newInventoryCount The updated inventory count of the product.
-   */
-  function updateInventoryCount(uint256 sku, uint256 newInventoryCount)
-  public
-  skuExists(sku)
-  isOwner {
+    * @param sku The sku of the product.
+    * @param newInventoryCount The updated inventory count of the product.
+    */
+  function updateInventoryCount(uint256 sku, uint256 newInventoryCount) 
+    public
+    skuExists(sku) 
+    isOwner {
 
     productsBySku[sku].inventoryCount = newInventoryCount;
     emit InventoryCountUpdated(sku, newInventoryCount);
   }
 
   /** @dev Shoppers call this to purchase a given product from the store.
-   * @param sku The sku of the product.
-   * @param quantity The number of inventory of the product the user is buying.
-   */
-  function purchaseProduct(uint256 sku, uint256 quantity)
-  public
-  payable
-  skuExists(sku)
-  enoughInventory(sku, quantity)
-  enoughEthSent(sku, quantity)
-  stopInEmergency {
+    * @param sku The sku of the product.
+    * @param quantity The number of inventory of the product the user is buying.
+    */
+  function purchaseProduct(uint256 sku, uint256 quantity) 
+    public 
+    payable
+    skuExists(sku)
+    enoughInventory(sku, quantity)
+    enoughEthSent(sku, quantity)
+    stopInEmergency {
 
     productsBySku[sku].inventoryCount = productsBySku[sku].inventoryCount.sub(quantity);
     emit PurchaseMade(sku, quantity);
   }
   /** @dev Default payable function.
-   */
-  function () external payable {}
+    */
+  function () public payable {}
 }
