@@ -62,14 +62,14 @@ class StoreOwnerContainer extends Component {
 
     return (
       <div>
-        <Header currentAccount={this.props.currentAccount} pageTitle='Store Owner Page'></Header>
+        <Header currentAccount={this.props.currentAccount} pageTitle='Store Owner View'></Header>
 
         <div style={{
           border: '1px solid #0000001e', 
           borderRadius: '4px', 
-          backgroundColor: '#fafafa',
+          backgroundColor: '#da6868',
           padding: '15px 15px 60px 15px',
-          margin: '15px',
+          margin: '45px',
           position: 'relative'}}>
 
           <div style={{fontSize: '24px'}}>New Store</div>

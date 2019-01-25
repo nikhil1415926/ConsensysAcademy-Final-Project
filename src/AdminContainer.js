@@ -56,14 +56,15 @@ class AdminContainer extends Component {
 
     return (
       <div>
-        <Header currentAccount={this.props.currentAccount} pageTitle='Admin Page'></Header>
+        
+        <Header currentAccount={this.props.currentAccount} pageTitle="ADMIN MODE"></Header>
 
         <div style={{
           border: '1px solid #0000001e', 
           borderRadius: '4px', 
-          backgroundColor: '#fafafa',
+          backgroundColor: '#4eca95',
           padding: '15px 15px 60px 15px',
-          margin: '15px',
+          margin: '55px',
           position: 'relative'}}>
           <div style={{fontSize: '24px'}}>Open Store Owner Requests</div>
           
