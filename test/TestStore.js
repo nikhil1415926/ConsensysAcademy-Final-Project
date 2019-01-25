@@ -62,7 +62,7 @@ contract('Store', function(accounts) {
   /*  
    * This test ensures that the store owner can withdraw
    * funds from the store upon successful sale.
-   */
+  
   it("should allow a store owner to withdraw funds after a sale.", function() {
     var ownerBalanceBefore = web3.eth.getBalance(accounts[0]).toNumber();
     var contractBalanceBefore = web3.eth.getBalance(contract.address).toNumber();
@@ -70,7 +70,7 @@ contract('Store', function(accounts) {
     return contract.withdraw.sendTransaction({from: accounts[0]})
       .then(() => assert.equal(ownerBalanceBefore - contractBalanceBefore, ownerBalanceBefore, "Contract balance did not successfully transfer to owner."));
   });
-
+ */
 
 
 });

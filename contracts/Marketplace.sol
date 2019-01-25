@@ -1,4 +1,4 @@
-pragma solidity >= 0.4.21 < 0.6.0;
+pragma solidity ^0.5.0;
 
 import "./Store.sol";
 
@@ -41,8 +41,8 @@ contract Marketplace {
     */
     function createNewStore(string memory name, string memory description) public isStoreOwner {
         Store newStore = new Store(msg.sender, name, description);
-        storeAddressesByOwner[msg.sender].push(newStore);
-        emit NewStoreCreated(msg.sender, newStore);
+        storeAddressesByOwner[msg.sender].push(address(newStore));
+        emit NewStoreCreated(msg.sender,address(newStore));
     }
 
     /** @dev Figures out what type of user msg.sender is.
@@ -99,6 +99,6 @@ contract Marketplace {
 
     /** @dev Default payable function.
     */
-    function () public payable {}
+    function () external payable {}
  
   }

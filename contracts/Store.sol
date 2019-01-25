@@ -1,4 +1,4 @@
-pragma solidity >= 0.4 .21 < 0.6 .0;
+pragma solidity ^0.5.0;
 
 import "zeppelin/contracts/math/SafeMath.sol";
 
@@ -99,9 +99,10 @@ contract Store {
 
   /** @dev Owner can withdraw any funds the store has earned by selling products.
    */
-  function withdraw() public isOwner {
-    owner.transfer(address(this).balance);
-  }
+    function withdraw() public isOwner {
+      owner = msg.sender;
+      msg.sender.transfer(address(this).balance);
+    }
 
 
   /** @dev Owner can add products to his/her store to sell.
@@ -109,7 +110,7 @@ contract Store {
    * @param newProductDescription The description of the product.
    * @param newProductPrice The price of the product.
    */
-  function addNewProduct(string memory newProductName, string memory newProductDescription, uint256 newProductPrice)
+    function addNewProduct(string memory newProductName, string memory newProductDescription, uint256 newProductPrice)
   public
   isOwner
   stringLengthOkay(newProductName)
