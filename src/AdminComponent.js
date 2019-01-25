@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Header from './Header.js';
 
 
-class AdminContainer extends Component {
+
+class AdminComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -57,7 +58,8 @@ class AdminContainer extends Component {
     return (
       <div>
         
-        <Header currentAccount={this.props.currentAccount} pageTitle="ADMIN MODE"></Header>
+        <Header currentAccount={this.props.currentAccount}  pageTitle='ADMIN MODE'>
+        </Header>
 
         <div style={{
           border: '1px solid #0000001e', 
@@ -76,4 +78,4 @@ class AdminContainer extends Component {
   }
 }
 
-export default AdminContainer
+export default AdminComponent

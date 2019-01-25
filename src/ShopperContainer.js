@@ -97,7 +97,7 @@ class ShopperContainer extends Component {
 
     return (
       <div>
-        <Header currentAccount={this.props.currentAccount} pageTitle='Shopper Page'></Header>
+        <Header currentAccount={this.props.currentAccount} pageTitle='Shoppers View'></Header>
 
         <div style={{
           border: '1px solid #0000001e', 

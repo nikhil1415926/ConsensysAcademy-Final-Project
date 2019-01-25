@@ -127,7 +127,7 @@ class StoreShopperView extends Component {
       <div style={{
         border: '1px solid #0000001e', 
         borderRadius: '4px', 
-        backgroundColor: '#fafafa',
+        backgroundColor: '#94fc80',
         width: '33%',
         padding: '15px 15px 60px 15px',
         position: 'relative',

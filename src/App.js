@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MarketplaceContract from '../build/contracts/Marketplace.json'
 import getWeb3 from './utils/getWeb3'
 
-import AdminContainer from './AdminContainer';
+import AdminComponent from './AdminComponent';
 import StoreOwnerContainer from './StoreOwnerContainer';
 import ShopperContainer from './ShopperContainer';
 
@@ -61,10 +61,10 @@ class App extends Component {
           <div className="pure-g">
             <div className="pure-u-1-1">
               {accountType === '' && <p>Loading...</p>}
-              {accountType === 'admin' && <AdminContainer 
+              {accountType === 'admin' && <AdminComponent 
                   web3={this.state.web3}
                   currentAccount={this.state.currentAccount} 
-                  marketplace={this.state.marketplaceInstance}></AdminContainer>}
+                  marketplace={this.state.marketplaceInstance}></AdminComponent>}
               {accountType === 'storeOwner' && <StoreOwnerContainer 
                   web3={this.state.web3} 
                   currentAccount={this.state.currentAccount} 
